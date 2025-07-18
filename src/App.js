@@ -26,10 +26,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './pages/Root';
 import ErrorPage from './pages/Error';
 import HomePage from './pages/Home';
-import EventsPage from './pages/Events';
+import EventsPage, { loader as eventsLoader } from './pages/Events';
 import NewEventPage from './pages/NewEvent';
 import EditEventPage from './pages/EditEvent';
-import EventDetailPage from './pages/EventDetail';
+import EventDetailPage, { loader as eventDetailLoader } from './pages/EventDetail';
 import EventsRootLoyout from './pages/EventsRoot';
 
 
@@ -45,22 +45,31 @@ const router = createBrowserRouter([
         element: <EventsRootLoyout />,
         children: [
           {
-            path: '', element: <EventsPage />, loader: async() => {
-              const response = await fetch('http://localhost:8080/events');
-
-              if (!response.ok) {
-                //todo  setError('Fetching events failed.');
-              } else {
-                const resData = await response.json();
-                return resData.events;
-            
-              }
-
-            }
+            path: '',
+            element: <EventsPage />,
+            loader: eventsLoader
           },
-          { path: ':eventId', element: <EventDetailPage /> },
-          { path: 'new', element: <NewEventPage /> },
-          { path: ':eventId/edit', element: <EditEventPage /> },
+          {
+            path: ':eventId',
+            id: 'event-detail',
+
+            loader: eventDetailLoader,
+            children: [
+              {
+                index: true,
+                element: <EventDetailPage />,
+              },
+              {
+                path: 'edit',
+                element: <EditEventPage />
+              },
+            ]
+          },
+          {
+            path: 'new',
+            element: <NewEventPage />
+          },
+
         ],
       },
     ],
