@@ -30,6 +30,7 @@ import EventsPage from './pages/Events';
 import NewEventPage from './pages/NewEvent';
 import EditEventPage from './pages/EditEvent';
 import EventDetailPage from './pages/EventDetail';
+import EventsRootLoyout from './pages/EventsRoot';
 
 
 const router = createBrowserRouter([
@@ -38,12 +39,17 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: '/', element: <HomePage /> },
-      { path: '/events', element: <EventsPage /> },
-      { path: '/events/:id', element: <EventDetailPage /> },
-      { path: '/events/new', element: <NewEventPage /> },
-
-      { path: '/events/:id/edit', element: <EditEventPage /> }
+      { index: true, element: <HomePage /> },
+      {
+        path: 'events', 
+        element: <EventsRootLoyout />,
+        children: [
+          { path: '', element: <EventsPage /> },
+          { path: ':eventId', element: <EventDetailPage /> },
+          { path: 'new', element: <NewEventPage /> },
+          { path: ':eventId/edit', element: <EditEventPage /> },
+        ],
+      },
     ],
   }
 ]);
