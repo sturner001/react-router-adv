@@ -27,9 +27,13 @@ import RootLayout from './pages/Root';
 import ErrorPage from './pages/Error';
 import HomePage from './pages/Home';
 import EventsPage, { loader as eventsLoader } from './pages/Events';
-import NewEventPage from './pages/NewEvent';
+import NewEventPage, { action as newEventAction } from './pages/NewEvent';
 import EditEventPage from './pages/EditEvent';
-import EventDetailPage, { loader as eventDetailLoader } from './pages/EventDetail';
+import EventDetailPage, 
+{ 
+  loader as eventDetailLoader,
+  action as deleteEventAction,
+ } from './pages/EventDetail';
 import EventsRootLoyout from './pages/EventsRoot';
 
 
@@ -39,7 +43,10 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
+      {
+        index: true,
+        element: <HomePage />
+      },
       {
         path: 'events',
         element: <EventsRootLoyout />,
@@ -58,6 +65,7 @@ const router = createBrowserRouter([
               {
                 index: true,
                 element: <EventDetailPage />,
+                action: deleteEventAction,
               },
               {
                 path: 'edit',
@@ -67,9 +75,9 @@ const router = createBrowserRouter([
           },
           {
             path: 'new',
-            element: <NewEventPage />
+            element: <NewEventPage />,
+            action: newEventAction,
           },
-
         ],
       },
     ],
