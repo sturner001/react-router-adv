@@ -3,7 +3,6 @@ import PageContent from "../components/PageContent";
 import MainNavigation from '../components/MainNavigation';
 
 const ErrorPage = () => {
-    console.log('Error Page!');
     const error = useRouteError();
 
     let title = 'An error occured!';
